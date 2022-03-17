@@ -1,0 +1,16 @@
+{
+  "name": "{{{PACKAGE_NAME}}}",
+  "main": "./cjs/index.js",
+  "module": "./esm/index.js",
+  "types": "./index.d.ts",
+  "version": "{{{VERSION}}}",
+  "exports": {
+    ".": {
+      "import": "./esm/index.js",
+      "require": "./cjs/index.js"
+    }
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {}
+}

@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "esnext",
+    "allowJs": true,
+    "declaration": true,
+    "sourceMap": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "Node",
+    "lib": [
+      "es2020",
+      "esnext.weakref",
+      "dom"
+    ]
+  },
+  "include": [
+    "./tests/**/*.test.ts"
+  ],
+  "files": [
+    "./src/index.ts"
+  ]
+}

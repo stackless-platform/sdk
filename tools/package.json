@@ -1,0 +1,44 @@
+{
+  "name": "stacklessjs-tools",
+  "main": "index.js",
+  "scripts": {
+    "build-local-debug": "./build.sh local debug"
+  },
+  "bin": {
+    "warp": "index.js"
+  },
+  "keywords": [],
+  "author": "Warpdrive Technologies, Inc.",
+  "license": "Apache-2.0",
+  "description": "StacklessJS Developer Tools",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/StacklessJS/Stackless",
+    "directory": "tools"
+  },
+  "devDependencies": {
+    "@types/commander": "^2.12.2",
+    "@types/figlet": "^1.2.0",
+    "@types/firebase": "^3.2.1",
+    "@types/inquirer": "^6.5.0",
+    "@types/mustache": "^4.0.1",
+    "@types/node": "^14.0.13",
+    "@types/node-emoji": "^1.8.1",
+    "esbuild": "^0.8.34",
+    "ts-node": "^8.10.2",
+    "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "ascii-box": "^1.1.2",
+    "chalk": "^4.1.0",
+    "commander": "^5.1.0",
+    "crc-32": "^1.2.0",
+    "cross-fetch": "^3.1.4",
+    "figlet": "^1.4.0",
+    "firebase": "^8.10.0",
+    "flatbuffers": "^2.0.3",
+    "inquirer": "^7.1.0",
+    "mustache": "^4.0.1",
+    "path": "^0.12.7"
+  }
+}

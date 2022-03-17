@@ -1,0 +1,7 @@
+node_modules/
+dist/
+stage/
+**/config.ts
+config.*.stamp
+version.json
+test/**

@@ -1,0 +1,17 @@
+{
+  "exclude": [
+    "config.*.*.ts",
+    "setup-npm-package.*"
+  ],
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "commonjs",
+    "allowJs": true,
+    "declaration": true,
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  }
+}
