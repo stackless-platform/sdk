@@ -19,7 +19,7 @@ export class Unsigned {
     toLong(): flatbuffers.Long {
         let high = Number((this.value & BigInt(0xFFFFFFFF00000000)) >> BigInt(32));
         let low = Number(this.value & BigInt(0xFFFFFFFF));
-        return flatbuffers.Long.create(low, high);
+        return flatbuffers.createLong(low, high);
     }
 
     toNumber(): number {
