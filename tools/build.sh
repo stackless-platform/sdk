@@ -70,7 +70,7 @@ echo "Building for the ${BUILD_TARGET} environment in ${BUILD_TYPE_L} mode"
 DIST_DIR="./dist"
 rm -rf ${DIST_DIR}
 
-npx tsc --outDir ${DIST_DIR} --sourceMap ${SOURCE_MAP} --declaration ${DECLARATION}
+tsc --outDir ${DIST_DIR} --sourceMap ${SOURCE_MAP} --declaration ${DECLARATION}
 
 DIST_DIR=${DIST_DIR} node ./setup-npm-package.js
 

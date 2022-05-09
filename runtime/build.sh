@@ -67,10 +67,10 @@ DIST_DIR="./dist"
 rm -rf ${DIST_DIR}
 
 echo "Building for CommonJS..."
-npx tsc -p ./tsconfig-build-cjs.json --outDir "${DIST_DIR}/cjs"
+tsc -p ./tsconfig-build-cjs.json --outDir "${DIST_DIR}/cjs"
 
 echo "Building for ESM..."
-npx tsc -p ./tsconfig-build-esm.json --outDir "${DIST_DIR}/esm"
+tsc -p ./tsconfig-build-esm.json --outDir "${DIST_DIR}/esm"
 
 echo "Removing internal type definitions..."
 pushd ${DIST_DIR}/cjs/internal/ > /dev/null
