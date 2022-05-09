@@ -1,7 +1,9 @@
 {
   "exclude": [
     "config.*.*.ts",
-    "setup-npm-package.*"
+    "setup-npm-package.*",
+    "dist/**/",
+    "src/templates/**"
   ],
   "compilerOptions": {
     "target": "ESNext",
