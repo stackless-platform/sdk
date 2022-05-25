@@ -1,13 +1,13 @@
 {
-  "name": "stacklessjs",
+  "name": "stackless-runtime",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "author": "Warpdrive Technologies, Inc.",
   "license": "Apache-2.0",
-  "description": "StacklessJS Runtime Library",
+  "description": "Stackless Runtime Library",
   "repository": {
     "type": "git",
-    "url": "https://github.com/StacklessJS/Stackless",
+    "url": "https://github.com/stackless-platform/sdk",
     "directory": "runtime"
   },
   "exports": {

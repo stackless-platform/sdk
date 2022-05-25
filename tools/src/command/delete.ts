@@ -10,8 +10,8 @@ import {AdminKeyFile} from "../model/admin-key-file";
 
 export function createDeleteProgramCommand(before: any) {
     program.command('delete <warpName>')
-        .description('Delete the warp from the StacklessJS platform and all its data.')
-        .requiredOption("--yes-im-sure-i-want-to-delete-this-warp", "Required because this operation is destructive and cannot be undone (even by StacklessJS support).")
+        .description('Delete the warp from the Stackless platform and all its data.')
+        .requiredOption("--yes-im-sure-i-want-to-delete-this-warp", "Required because this operation is destructive and cannot be undone (even by Stackless support).")
         .action(async (warpName: string) => {
             if (before)
                 before();

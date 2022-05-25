@@ -5,7 +5,7 @@
  * - You can create any number of properties on Services containing most kinds of JavaScript data (numbers, strings, Maps, Sets, etc..)
  * - Clients call methods defined on Services using code-generated classes.
  * - Changes made to the properties on Services are automatically saved unless an error or exception occur.
- * - Each service method call involves a round-trip to the StacklessJS platform backend and is executed inside a single database transaction.
+ * - Each service method call involves a round-trip to the Stackless platform backend and is executed inside a single database transaction.
  * - Use the `system` object inside service methods to manage your Data and send Messages.
  * @see system.getService
  * @see system.revert

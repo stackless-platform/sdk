@@ -11,8 +11,8 @@ import {GoogleIdentitySingleton} from "../service/google-identity";
 
 export function createAccountDeleteProgramCommand(before: any, attachTo: Command) {
     attachTo.command('delete')
-        .description('Delete your StacklessJS account including all its code and objects.')
-        .requiredOption("--yes-im-sure-i-want-to-delete-my-account", "Required because this operation is destructive and cannot be undone (even by StacklessJS support).")
+        .description('Delete your Stackless account including all its code and objects.')
+        .requiredOption("--yes-im-sure-i-want-to-delete-my-account", "Required because this operation is destructive and cannot be undone (even by Stackless support).")
         .action(async () => {
             if (before)
                 before();
@@ -27,7 +27,7 @@ export function createAccountDeleteProgramCommand(before: any, attachTo: Command
 
 function getLoginInfo(): Promise<LoginInfo> {
     return new Promise<LoginInfo>(resolve => {
-        console.log("You must login with your username and password to be able to delete you StacklessJS account.")
+        console.log("You must login with your username and password to be able to delete you Stackless account.")
         inquirer.prompt([{
             name: 'username',
             message: 'Username (email):',
@@ -59,7 +59,7 @@ export async function executeAccountDeleteAsync(loginInfo: LoginInfo): Promise<b
         if (AdminKeyFile.exists())
             AdminKeyFile.delete();
 
-        logOk("StacklessJS account deleted");
+        logOk("Stackless account deleted");
         return true;
     } catch (e: any) {
         logRemoteError(logContext, e.message);

@@ -16,8 +16,8 @@ export function logLocalError(msg: string) {
 }
 
 export function logRemoteError(logContext: string, msg: string) {
-    console.log(getColor(chalk.redBright, "StacklessJS Platform Error: ") + msg);
-    console.error(getColor(chalk.gray, 'When reporting this error to the StacklessJS support Discord channel, give them this request id: ') + getColor(chalk.redBright, logContext));
+    console.log(getColor(chalk.redBright, "Stackless Platform Error: ") + msg);
+    console.error(getColor(chalk.gray, 'When reporting this error to the Stackless support Discord channel, give them this request id: ') + getColor(chalk.redBright, logContext));
     return msg;
 }
 

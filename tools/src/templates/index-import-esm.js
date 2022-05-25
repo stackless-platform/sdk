@@ -1,2 +1,2 @@
-import {createUuid, Data, Service, Message} from "stacklessjs";
-import {runtime} from "stacklessjs/internal";
+import {createUuid, Data, Service, Message} from "stackless-runtime";
+import {runtime} from "stackless-runtime/internal";

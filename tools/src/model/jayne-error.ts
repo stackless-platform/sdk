@@ -80,7 +80,7 @@ export class CodeError extends Error {
                         return "Business logic error: " + error;
                 }
             case "External":
-                return "StacklessJS internal error: " + error;
+                return "Stackless internal error: " + error;
             case "CodeParse":
                 return "Warp compilation error: " + error;
         }

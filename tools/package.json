@@ -1,5 +1,5 @@
 {
-  "name": "stacklessjs-tools",
+  "name": "stackless-tools",
   "main": "index.js",
   "scripts": {
     "build-local-debug": "./build.sh local debug"
@@ -10,10 +10,10 @@
   "keywords": [],
   "author": "Warpdrive Technologies, Inc.",
   "license": "Apache-2.0",
-  "description": "StacklessJS Developer Tools",
+  "description": "Stackless Developer Tools",
   "repository": {
     "type": "git",
-    "url": "https://github.com/StacklessJS/Stackless",
+    "url": "https://github.com/stackless-platform/sdk",
     "directory": "tools"
   },
   "devDependencies": {

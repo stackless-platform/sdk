@@ -1084,7 +1084,7 @@ export function wrapScriptException(exception: ScriptException) {
 
 export function getErrorForNotOkResponse<T extends OkResponseType>(logContext: string, response: UserResponse<T>) {
     if (response.platformException) {
-        return new PlatformError(logError(logContext, `The StacklessJS platform encountered an error ${response.platformException.codeString}`), response.platformException.codeString);
+        return new PlatformError(logError(logContext, `The Stackless platform encountered an error ${response.platformException.codeString}`), response.platformException.codeString);
     } else if (response.exception) {
         return wrapScriptException(response.exception);
     } else {

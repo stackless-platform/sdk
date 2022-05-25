@@ -104,7 +104,7 @@ export class Jayne {
 
     public async deleteAccountAsync(logContext: string): Promise<void> {
         try {
-            let fetchInit = this.createGoogleIdentityFetchInit("DELETE", "delete your StacklessJS account and all its data");
+            let fetchInit = this.createGoogleIdentityFetchInit("DELETE", "delete your Stackless account and all its data");
             await this.makeServiceCallAsync(fetchInit, `tools-account/delete_account?logContext=${logContext}`, false, true);
         } catch (e: any) {
             if (e.code === "ECONNREFUSED")

@@ -108,7 +108,7 @@ function promptLoginInfoAsync(): Promise<LoginInfo> {
             {
                 type: 'list',
                 name: 'login_type',
-                message: 'Do you have a StacklessJS account?',
+                message: 'Do you have a Stackless account?',
                 choices: ["Yes", "No, I'd like to create a new account"]
             }
         ]).then(loginTypeAnswers => {
@@ -130,7 +130,7 @@ function promptLoginInfoAsync(): Promise<LoginInfo> {
                     });
                 });
             } else { //new
-                console.log("Please enter your email address. This will be your StacklessJS username.");
+                console.log("Please enter your email address. This will be your Stackless username.");
                 console.log(chalk.gray("Warpdrive Technologies, Inc. will never share your data with third parties."));
                 inquirer.prompt([
                     {
@@ -150,7 +150,7 @@ function promptLoginInfoAsync(): Promise<LoginInfo> {
 
 export function createAccountLoginProgramCommand(before: any, attachTo: Command) {
     attachTo.command('login [keyFile]')
-        .description('Login to StacklessJS optionally specifying your key file')
+        .description('Login to Stackless optionally specifying your key file')
         .option("-o, --overwrite", "Overwrite existing login.")
         .action(async (keyFile: string, opts: any) => {
             if (before)
@@ -200,7 +200,7 @@ export async function createNewAccountAsync(logContext: string, username: string
         console.log(chalk.yellowBright("To finish creating your account you must verify your email address."));
         console.log();
         console.log(`${chalk.yellow("Next Steps:")}`);
-        console.log(`${chalk.blueBright(" 1. Click the link in the email from noreply@stacklessjs.com.")}`);
+        console.log(`${chalk.blueBright(" 1. Click the link in the email from noreply@stackless.dev.")}`);
         console.log(`${chalk.blueBright(" 2. Click the CONTINUE button on the page the link takes you.")}`);
         console.log();
         console.log(chalk.yellowBright("You'll be logged in here once you've clicked the continue button."));
@@ -256,11 +256,11 @@ export async function executeLoginAsync(keyFile: PathLike | null = null, overwri
         }
         if (loginInfo.isNew) {
             if (await createNewAccountAsync(logContext, loginInfo.username, loginInfo.password)) {
-                logSuccess("StacklessJS account created and logged in successfully!");
+                logSuccess("Stackless account created and logged in successfully!");
             }
         } else {
             await loginExistingDeveloperAsync(logContext, loginInfo.username, loginInfo.password);
-            logVerbose("Successfully logged into your StacklessJS account.");
+            logVerbose("Successfully logged into your Stackless account.");
         }
 
         return true;

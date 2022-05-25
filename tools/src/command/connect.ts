@@ -11,7 +11,7 @@ import path from "path";
 import {createClient} from "../util/client-generator";
 import {createLogContext} from "../util/log-context";
 
-const RUNTIME_LIB_NAME = "stacklessjs";
+const RUNTIME_LIB_NAME = "stackless-runtime";
 
 function getBuildKeyAndRegenerateCommand(warpName: string): [string, string] {
     let buildKey = `connect-${warpName.toLowerCase()}`;

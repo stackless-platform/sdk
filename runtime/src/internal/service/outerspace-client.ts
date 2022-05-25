@@ -143,7 +143,7 @@ export class OuterspaceClient {
 
     private onMessage = (message: any) => {
         if (!message.data) {
-            throw new Error(sysLogError("Empty message received from StacklessJS"));
+            throw new Error(sysLogError("Empty message received from Stackless"));
         } else {
             if (message.data instanceof ArrayBuffer) {
                 //node.js
@@ -152,7 +152,7 @@ export class OuterspaceClient {
                 let payloadBuffer = arrayBuffer.slice(payloadOffset);
                 switch (sendKind) {
                     case SendKind.Invalid:
-                        throw new Error(sysLogError("Invalid message received from StacklessJS: invalid SendKind value"));
+                        throw new Error(sysLogError("Invalid message received from Stackless: invalid SendKind value"));
                     case SendKind.Response:
                         this.handleResponse(requestId, payloadBuffer);
                         break;
@@ -164,10 +164,10 @@ export class OuterspaceClient {
                             });
                         break;
                     default:
-                        throw new Error(sysLogError("Invalid message received from StacklessJS: unknown SendKind value"));
+                        throw new Error(sysLogError("Invalid message received from Stackless: unknown SendKind value"));
                 }
             } else {
-                throw new Error(sysLogError("Invalid message received from StacklessJS"));
+                throw new Error(sysLogError("Invalid message received from Stackless"));
             }
         }
     };

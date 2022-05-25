@@ -524,7 +524,7 @@ export function createClient(logContext: string, userKey: string, warpIndex: War
     const esmClient = generateClient(logContext, true, userKey, warpIndex, regenCommand);
 
     // create necessary directories
-    const relRootPath = ".stacklessjs/warp-clients/" + canonicalWarpName;
+    const relRootPath = ".stackless/generated-clients/" + canonicalWarpName;
     const rootDir = path.join(projectDir, relRootPath);
     const cjsDir = path.join(rootDir, "cjs");
     const esmDir = path.join(rootDir, "esm");

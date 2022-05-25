@@ -1,2 +1,2 @@
-const {createUuid, Data, Service, Message} = require("stacklessjs");
-const {runtime} = require("stacklessjs/internal");
+const {createUuid, Data, Service, Message} = require("stackless-runtime");
+const {runtime} = require("stackless-runtime/internal");

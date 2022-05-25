@@ -17,7 +17,7 @@ export async function getRiverClientAsync(warpKey: WarpKey): Promise<RiverClient
     try {
         riverClient = await openRiverClientAsync(warpKey, userKey, handleDataUpdateMessageWithTrackerAsync, handleMessageMessageWithTrackerAsync);
     } catch (reason) {
-        throw new Error(sysLogError(`Unable to open connection to the StacklessJS platform. Reason: ${JSON.stringify(reason)}`));
+        throw new Error(sysLogError(`Unable to open connection to the Stackless platform. Reason: ${JSON.stringify(reason)}`));
     }
 
     WarpRegistry.instance.setRiverClient(warpKey, riverClient);

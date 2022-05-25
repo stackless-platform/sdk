@@ -10,7 +10,7 @@ export const ADMIN_KEY_FILE_MODE = 0o600; //just like ~/.ssh/id_rsa (etc)
 
 export function getKeyFilePath() : string {
     const home_dir = homedir();
-    return path.join(home_dir, '.config', 'stacklessjs', 'warp-admin-key.json');
+    return path.join(home_dir, '.config', 'stackless', 'warp-admin-key.json');
 }
 
 export function isLoggedIn() : boolean {

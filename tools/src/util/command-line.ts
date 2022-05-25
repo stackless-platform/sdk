@@ -19,11 +19,11 @@ import {box} from "ascii-box";
 function showLogo() {
     //display the header
     console.log(chalk.blueBright(
-        figlet.textSync('StacklessJS', "Cybermedium")
+        figlet.textSync('Stackless', "Cybermedium")
     ));
     console.log(chalk.blueBright("Copyright (c) 2022 Warpdrive Technologies, Inc. All Rights Reserved."));
     console.log();
-    console.log(chalk.gray("StacklessJS Community: ") + DISCORD_INVITE_URL);
+    console.log(chalk.gray("Stackless Community: ") + DISCORD_INVITE_URL);
     console.log()
 }
 
@@ -48,9 +48,9 @@ export function processCommandLineOptions() {
     const accountCommand = new Command('account')
         .storeOptionsAsProperties(false)
         .passCommandToAction(false)
-        .description("Manage your StacklessJS account");
-    program.option('--version', "Output the version of stacklessjs-tools and exit.")
-    program.option('--no-logo', "Don't show the StacklessJS logo on start");
+        .description("Manage your Stackless account");
+    program.option('--version', "Output the version of stackless-tools and exit.")
+    program.option('--no-logo', "Don't show the Stackless logo on start");
     program.option('-v, --verbose', "Show verbose messages");
     program.option('--quiet', "Don't show any success/ok messages (implies --no-logo).");
     program.on('option:no-logo', function() {
