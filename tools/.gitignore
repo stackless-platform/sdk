@@ -5,3 +5,4 @@ stage/
 config.*.stamp
 version.json
 test/**
+package-config.json

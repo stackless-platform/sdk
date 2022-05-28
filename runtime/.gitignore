@@ -5,3 +5,4 @@ stage/
 **/config.ts
 config.*.stamp
 version.json
+package-config.json

@@ -13,7 +13,9 @@ function assert_env(name) {
 const DIST_DIR = assert_env("DIST_DIR");
 const PACKAGE_OBJ = JSON.parse(fs.readFileSync("./package.json").toString('utf-8'));
 const VERSION_OBJ = JSON.parse(fs.readFileSync("./version.json").toString('utf-8'));
+const PACKAGE_NAME = JSON.parse(fs.readFileSync("./package-name.json").toString('utf-8'));
 
+PACKAGE_OBJ.name = PACKAGE_NAME.name;
 PACKAGE_OBJ.version = VERSION_OBJ.version;
 PACKAGE_OBJ.scripts = {};
 PACKAGE_OBJ.devDependencies = {};

@@ -1,5 +1,6 @@
 {
-  "name": "stackless-tools",
+  "name": "",
+  "private": "true",
   "main": "index.js",
   "scripts": {
     "build-local-debug": "./build.sh local debug"
@@ -32,7 +33,7 @@
     "chalk": "^4.1.0",
     "commander": "^5.1.0",
     "crc-32": "^1.2.0",
-    "cross-fetch": "^3.1.4",
+    "cross-fetch": "^3.1.5",
     "figlet": "^1.4.0",
     "firebase": "^8.10.0",
     "flatbuffers": "^2.0.3",

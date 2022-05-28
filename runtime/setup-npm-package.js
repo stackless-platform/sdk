@@ -13,8 +13,12 @@ function assert_env(name) {
 const DIST_DIR = assert_env("DIST_DIR");
 const ROOT_PACKAGE_OBJ = JSON.parse(fs.readFileSync("./package.json").toString('utf-8'));
 const VERSION_OBJ = JSON.parse(fs.readFileSync("./version.json").toString('utf-8'));
+const PACKAGE_CONFIG = JSON.parse(fs.readFileSync("./package-config.json").toString('utf-8'));
+
 const PWD = "./";
 //Configure the root package.json
+ROOT_PACKAGE_OBJ.name = PACKAGE_CONFIG.name;
+ROOT_PACKAGE_OBJ.private = PACKAGE_CONFIG.private;
 ROOT_PACKAGE_OBJ.version = VERSION_OBJ.version;
 ROOT_PACKAGE_OBJ.scripts = {};
 ROOT_PACKAGE_OBJ.devDependencies = {};
