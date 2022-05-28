@@ -55,7 +55,7 @@ function validateWarpTarget(expected: WarpKey, other: WarpKey, what: string) {
     }
 
     if (WarpRegistry.instance.isRegistered(other)) {
-        //data meant for a different warp (warpdrive programming error)
+        //data meant for a different warp (stackless programming error)
         const warp_name = WarpRegistry.instance.getName(expected);
         const other_warp_name = WarpRegistry.instance.getName(other);
         throw new Error(sysLogError(`Unexpectedly received ${what} destined for the warp ${other_warp_name} when ${warp_name} was expected.`));

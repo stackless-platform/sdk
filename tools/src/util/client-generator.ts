@@ -456,7 +456,7 @@ function generateClient(logContext: string, isEsm: boolean, userKey: string, war
 
     const index_js = Mustache.render(indexTemplate, {
         "BUILD_INFO": BUILD_INFO,
-        WARPDRIVE_TOOLS_VERSION: version,
+        STACKLESS_TOOLS_VERSION: version,
         IMPORT: isEsm ? readTemplate("index-import-esm.js") : readTemplate("index-import-cjs.js"),
         CJS_EXPORT: cjsExports,
         REGEN_COMMAND: regenCommand,

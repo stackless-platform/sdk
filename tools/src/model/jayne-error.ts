@@ -1,8 +1,8 @@
 import {requiresTruthy} from "../util/requires";
 import {SERVICE_NOTICES_CHANNEL} from "../config"
 
-export const WARPDRIVE_EMAIL_NOT_VERIFIED_ERROR_CODE = 404;
-export const WARPDRIVE_SERVER_ERROR_CODE = 400;
+export const STACKLESS_EMAIL_NOT_VERIFIED_ERROR_CODE = 404;
+export const STACKLESS_SERVER_ERROR_CODE = 400;
 
 export class ScriptError extends Error {
     constructor(public message: string, public stack: string) {

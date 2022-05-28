@@ -265,7 +265,7 @@ function createInboundDataDelta(builder: Builder, data: Data, transferQueue: Dat
     const classKey = DataRegistry.instance.getClassKey(data.constructor);
 
     // BUG: Deleted Properties won't be sent to the server as deleted properties.
-    // https://warpdrive-network.atlassian.net/browse/WARP-66?atlOrigin=eyJpIjoiNWI4ODdmM2Q3NzQyNGU0YWIwYzMxNTBmOGM4NDIwZmEiLCJwIjoiaiJ9
+    // https://stackless-network.atlassian.net/browse/WARP-66?atlOrigin=eyJpIjoiNWI4ODdmM2Q3NzQyNGU0YWIwYzMxNTBmOGM4NDIwZmEiLCJwIjoiaiJ9
 
     let objectVersion = DataRegistry.instance.tryGetVersion(data);
     if (!objectVersion) {

@@ -1,6 +1,6 @@
 import {GoogleIdentity, GoogleIdentitySingleton} from "./google-identity";
 import {requiresTruthy} from "../util/requires";
-import {WARPDRIVE_SERVER_ERROR_CODE, parseError, WARPDRIVE_EMAIL_NOT_VERIFIED_ERROR_CODE} from "../model/jayne-error";
+import {STACKLESS_SERVER_ERROR_CODE, parseError, STACKLESS_EMAIL_NOT_VERIFIED_ERROR_CODE} from "../model/jayne-error";
 import fetch from 'cross-fetch';
 import {WarpClassMapping} from "../model/warp-config";
 import {JAYNE_SERVICE_URL, JAYNE_TOOLS_PROTOCOL_VERSION} from "../config";
@@ -95,7 +95,7 @@ class GetWarpUseInfoResponse {
     }
 }
 
-const WARPDRIVE_JAVASCRIPT_LANGUAGE = 0;
+const STACKLESS_JAVASCRIPT_LANGUAGE = 0;
 
 export class Jayne {
     constructor(private googleIdentity: GoogleIdentity) {
@@ -141,7 +141,7 @@ export class Jayne {
     public async bootWarpAsync(logContext: string, adminKey: string, warpName: string, warpFiles: WarpFileContent[],
                                warpClassMappings?: WarpClassMapping[], warpId?: string, currentWarpVersion?: string,
                                lastClassId?: number): Promise<BootWarpResponse> {
-        const req = new BootWarpRequest(logContext, warpName, WARPDRIVE_JAVASCRIPT_LANGUAGE,
+        const req = new BootWarpRequest(logContext, warpName, STACKLESS_JAVASCRIPT_LANGUAGE,
             warpFiles, warpId, currentWarpVersion, warpClassMappings, lastClassId);
 
         try {
@@ -214,7 +214,7 @@ export class Jayne {
 
     private createFetchInit(additional: any) {
         const commonHeaders = {
-            "X-Warpdrive-Tools-Protocol-Version": JAYNE_TOOLS_PROTOCOL_VERSION,
+            "X-Stackless-Tools-Protocol-Version": JAYNE_TOOLS_PROTOCOL_VERSION,
             'Content-Type': 'application/json'
         };
         if (additional.headers)
@@ -262,7 +262,7 @@ export class Jayne {
 
         if(parse) {
             if (!response.ok) {
-                if (response.status === WARPDRIVE_SERVER_ERROR_CODE) {
+                if (response.status === STACKLESS_SERVER_ERROR_CODE) {
                     throw parseError(await response.json());
                 }
                 throw new Error("Response was not OK: " + response.statusText);
