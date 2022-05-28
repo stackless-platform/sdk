@@ -1,3 +1,3 @@
-export const __wetag = Symbol("Message tag");
-export const __wopk = Symbol("Data primary key");
-export const __wspk = Symbol("Service primary key");
+export const __Message_Tag = Symbol("Message tag");
+export const __Data_Primary_Key = Symbol("Data primary key");
+export const __Service_Primary_Key = Symbol("Service primary key");

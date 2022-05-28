@@ -1,40 +1,40 @@
 import {requiresTruthy} from "../internal/util/requires.js";
 import {DataRegistry} from "../internal/util/registry.js";
 import {DataKey} from "../internal/internal-model-types.js";
-import {__wetag, __wopk, __wspk} from "../internal/symbol.js";
+import {__Message_Tag, __Data_Primary_Key, __Service_Primary_Key} from "../internal/symbol.js";
 
 export class Service {
-    [__wspk]: string;
+    [__Service_Primary_Key]: string;
 
     constructor(primaryKey: string) {
         requiresTruthy('primaryKey', primaryKey);
-        this[__wspk] = primaryKey;
+        this[__Service_Primary_Key] = primaryKey;
     }
 
     get primaryKey(): string {
-        return this[__wspk];
+        return this[__Service_Primary_Key];
     }
 }
 
 export type ServiceConstructor<T extends Service> = new(primaryKey: string) => T;
 
 export class Message {
-    [__wetag]: true;
+    [__Message_Tag]!: true;
 }
 
 export type MessageConstructor<T extends Message> = new() => T;
 
 export class Data {
-    [__wopk]: string;
+    [__Data_Primary_Key]: string;
 
     constructor(primaryKey: string) {
         requiresTruthy('primaryKey', primaryKey);
         DataRegistry.instance.setInstance(new DataKey(DataRegistry.instance.getClassKey(this.constructor), primaryKey), this);
-        this[__wopk] = primaryKey;
+        this[__Data_Primary_Key] = primaryKey;
     }
 
     get primaryKey(): string {
-        return this[__wopk];
+        return this[__Data_Primary_Key];
     }
 }
 

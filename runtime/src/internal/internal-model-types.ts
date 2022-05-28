@@ -15,7 +15,7 @@ import {UserMessageUnionWrapperProto} from "./protocol/user-message-union-wrappe
 import {SubscribeDataUpdatesResponseProto} from "./protocol/subscribe-data-updates-response-proto.js";
 import {WarpReferenceUnionProto} from "./protocol/warp-reference-union-proto.js";
 import {Message, Data} from "../public/model-types.js";
-import {__wopk} from "./symbol.js";
+import {__Data_Primary_Key} from "./symbol.js";
 
 export type WarpIdString = string;
 export type WarpVersionString = string;
@@ -45,7 +45,7 @@ export function createDataInstance(objectKey: DataKey): Data {
     const ctor = DataRegistry.instance.getCtor(objectKey.classKey);
 
     const object = {
-        [__wopk]: objectKey.primaryKey
+        [__Data_Primary_Key]: objectKey.primaryKey
     };
 
     if (!Reflect.setPrototypeOf(object, ctor.prototype))
