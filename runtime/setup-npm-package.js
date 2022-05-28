@@ -18,7 +18,12 @@ const PACKAGE_CONFIG = JSON.parse(fs.readFileSync("./package-config.json").toStr
 const PWD = "./";
 //Configure the root package.json
 ROOT_PACKAGE_OBJ.name = PACKAGE_CONFIG.name;
-ROOT_PACKAGE_OBJ.private = PACKAGE_CONFIG.private;
+if(PACKAGE_CONFIG.private) {
+    ROOT_PACKAGE_OBJ.private = true;
+} else {
+    delete ROOT_PACKAGE_OBJ.private;
+}
+ 
 ROOT_PACKAGE_OBJ.version = VERSION_OBJ.version;
 ROOT_PACKAGE_OBJ.scripts = {};
 ROOT_PACKAGE_OBJ.devDependencies = {};

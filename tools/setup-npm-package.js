@@ -13,9 +13,16 @@ function assert_env(name) {
 const DIST_DIR = assert_env("DIST_DIR");
 const PACKAGE_OBJ = JSON.parse(fs.readFileSync("./package.json").toString('utf-8'));
 const VERSION_OBJ = JSON.parse(fs.readFileSync("./version.json").toString('utf-8'));
-const PACKAGE_NAME = JSON.parse(fs.readFileSync("./package-name.json").toString('utf-8'));
+const PACKAGE_CONFIG = JSON.parse(fs.readFileSync("./package-config.json").toString('utf-8'));
 
-PACKAGE_OBJ.name = PACKAGE_NAME.name;
+PACKAGE_OBJ.name = PACKAGE_CONFIG.name;
+
+if(PACKAGE_CONFIG.private) {
+    PACKAGE_OBJ.private = true;
+} else {
+    delete PACKAGE_OBJ.private;
+}
+
 PACKAGE_OBJ.version = VERSION_OBJ.version;
 PACKAGE_OBJ.scripts = {};
 PACKAGE_OBJ.devDependencies = {};
