@@ -1,11 +1,12 @@
 /// <reference lib="dom" />
-import * as firebase from 'firebase';
-import {logLocalError, logVerbose} from "../util/logging";
-import {FIREBASE_CONFIG, SITE_VERIFY_EMAIL_URL} from "../config";
-import {requiresTruthy} from "../util/requires";
+import { getApp, initializeApp, FirebaseApp } from 'firebase/app';
+import { getAuth, signOut, onAuthStateChanged, Auth, signInWithEmailAndPassword, UserCredential, sendEmailVerification } from 'firebase/auth';
+import { logLocalError, logVerbose } from "../util/logging";
+import { FIREBASE_CONFIG, SITE_VERIFY_EMAIL_URL } from "../config";
+import { requiresTruthy } from "../util/requires";
 
 class GoogleIdentityLoginInfo {
-    constructor(public credential: firebase.default.auth.UserCredential, public idToken: string) {
+    constructor(public credential: UserCredential, public idToken: string) {
         requiresTruthy("credential", credential);
         requiresTruthy("idToken", idToken);
     }
@@ -13,15 +14,19 @@ class GoogleIdentityLoginInfo {
 
 export class GoogleIdentity {
     private _loginInfo: GoogleIdentityLoginInfo | null;
+    private _app: FirebaseApp;
+    private _auth: Auth;
 
     constructor() {
-        firebase.default.initializeApp(FIREBASE_CONFIG);
+        initializeApp(FIREBASE_CONFIG);
+        this._app = getApp();
+        this._auth = getAuth(this._app);
         this._loginInfo = null;
     }
 
     public get idToken(): string {
         const idToken = this._loginInfo?.idToken;
-        if(!idToken)
+        if (!idToken)
             throw new Error(logLocalError("Attempted to get id token when not logged in"));
         return idToken;
     }
@@ -36,7 +41,7 @@ export class GoogleIdentity {
         }
 
         try {
-            await firebase.default.auth().signOut();
+            await signOut(this._auth);
             this._loginInfo = null;
             logVerbose("Logged out of Google Identity successfully");
         } catch (e) {
@@ -49,12 +54,12 @@ export class GoogleIdentity {
             throw new Error(logLocalError("Already logged in to Google Identity, cannot login in again"));
         }
 
-        let userCredential;
-        try{
-            userCredential = await firebase.default.auth().signInWithEmailAndPassword(username, password);
+        let userCredential: UserCredential;
+        try {
+            userCredential = await signInWithEmailAndPassword(this._auth, username, password);
         }
         catch (e: any) {
-            if(e.code === "auth/user-not-found")
+            if (e.code === "auth/user-not-found")
                 throw new Error("Invalid username or password");
             throw e;
         }
@@ -74,15 +79,17 @@ export class GoogleIdentity {
     public async sendVerificationEmailAsync(token: string) {
         if (!this.isLoggedIn)
             throw new Error("Must be signed in");
-        try
-        {
+        try {
             const actionCodeSettings = {
                 url: `${SITE_VERIFY_EMAIL_URL}?token=` + token,
                 handleCodeInApp: false
             };
-            await firebase.default.auth().currentUser?.sendEmailVerification(actionCodeSettings);
+            const currentUser = this._auth.currentUser;
+            if(!currentUser)
+                throw new Error(logLocalError("The current user wasn't set"));
+            await sendEmailVerification(currentUser, actionCodeSettings)
         }
-        catch(e: any) {
+        catch (e: any) {
             throw new Error(logLocalError("Failed to send verification email: " + e));
         }
     }
