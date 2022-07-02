@@ -1,4 +1,4 @@
-import {logLocalError} from "./logging";
+import {logLocalError} from "./logging.js";
 
 export const emailValidatorAsync = async (input: any) => {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

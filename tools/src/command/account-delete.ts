@@ -1,13 +1,13 @@
-import {logRemoteError, logOk} from "../util/logging";
-import {AdminKeyFile, isLoggedIn} from "../model/admin-key-file";
-import {JayneSingleton} from "../service/jayne";
+import {logRemoteError, logOk} from "../util/logging.js";
+import {AdminKeyFile, isLoggedIn} from "../model/admin-key-file.js";
+import {JayneSingleton} from "../service/jayne.js";
 import {Command} from "commander";
 import inquirer from "inquirer";
-import {emailValidatorAsync} from "../util/validators";
-import {LoginInfo} from "../model/login-info";
-import {loginGoogleIdentityAsync, logoutAsync} from "./account-login";
-import {createLogContext} from "../util/log-context";
-import {GoogleIdentitySingleton} from "../service/google-identity";
+import {emailValidatorAsync} from "../util/validators.js";
+import {LoginInfo} from "../model/login-info.js";
+import {loginGoogleIdentityAsync, logoutAsync} from "./account-login.js";
+import {createLogContext} from "../util/log-context.js";
+import {GoogleIdentitySingleton} from "../service/google-identity.js";
 
 export function createAccountDeleteProgramCommand(before: any, attachTo: Command) {
     attachTo.command('delete')

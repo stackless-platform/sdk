@@ -1,20 +1,20 @@
-import chalk from "chalk";
-import * as figlet from "figlet";
-import {createAccountLoginProgramCommand} from "../command/account-login";
-import {createAccountDeleteProgramCommand} from "../command/account-delete";
-import {createInitProgramCommand} from "../command/init";
-const { program, Command } = require('commander');
-import {GlobalOptions} from "./global-options";
-import {createBootProgramCommand} from "../command/boot";
-import {createConnectProgramCommand} from "../command/connect";
-import {createListProgramCommand} from "../command/list";
-import {createDeleteProgramCommand} from "../command/delete";
-import {DISCORD_INVITE_URL} from "../config";
-import {SERVICE_WARNINGS} from "../service-notice";
-
-const {version} = require("../package.json");
 // @ts-ignore
 import {box} from "ascii-box";
+import {Command, program} from "commander";
+import chalk from "chalk";
+import figlet from "figlet";
+
+import {createAccountLoginProgramCommand} from "../command/account-login.js";
+import {createAccountDeleteProgramCommand} from "../command/account-delete.js";
+import {createInitProgramCommand} from "../command/init.js";
+import {GlobalOptions} from "./global-options.js";
+import {createBootProgramCommand} from "../command/boot.js";
+import {createConnectProgramCommand} from "../command/connect.js";
+import {createListProgramCommand} from "../command/list.js";
+import {createDeleteProgramCommand} from "../command/delete.js";
+import {DISCORD_INVITE_URL} from "../config.js";
+import {SERVICE_WARNINGS} from "../service-notice.js";
+import {getPackageJsonVersion} from "./package-json.js";
 
 function showLogo() {
     //display the header
@@ -64,7 +64,7 @@ export function processCommandLineOptions() {
         GlobalOptions.quiet = true;
     });
     program.on('option:version', function () {
-        console.log(version);
+        console.log(getPackageJsonVersion());
         process.exit(0);
     });
     let before = () => {
@@ -74,8 +74,8 @@ export function processCommandLineOptions() {
             showServiceWarning();
     }
     createInitProgramCommand(before);
-    createAccountLoginProgramCommand(before, accountCommand);
-    createAccountDeleteProgramCommand(before, accountCommand);
+    createAccountLoginProgramCommand(before, <Command>accountCommand);
+    createAccountDeleteProgramCommand(before, <Command>accountCommand);
     createBootProgramCommand(before);
     createConnectProgramCommand(before);
     createListProgramCommand(before);

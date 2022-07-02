@@ -1,9 +1,9 @@
-import {requiresTruthy} from "../util/requires";
+import {requiresTruthy} from "../util/requires.js";
 import path from "path";
 import fs, {PathLike} from "fs";
-import {logLocalError} from "../util/logging";
+import {logLocalError} from "../util/logging.js";
 import {homedir} from "os";
-import {BaseConfig} from "./base-config";
+import {BaseConfig} from "./base-config.js";
 
 export const ADMIN_KEY_LENGTH = 256;
 export const ADMIN_KEY_FILE_MODE = 0o600; //just like ~/.ssh/id_rsa (etc)

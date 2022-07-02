@@ -1,15 +1,15 @@
 import chalk from "chalk";
-import {logRemoteError, logOk, logWarning, logLocalError, logNotice, logDetails} from "../util/logging";
+import {logRemoteError, logOk, logWarning, logLocalError, logNotice, logDetails} from "../util/logging.js";
 import fs from "fs";
 import {Command, program} from "commander";
-import {maybeExecuteLoginAsync} from "./account-login";
-import {validateWarpNameOrErrorAsync} from "../util/validators";
-import {JayneSingleton} from "../service/jayne";
-import {AdminKeyFile} from "../model/admin-key-file";
-import {deserializeWarpIndex} from "../util/deserializer";
+import {maybeExecuteLoginAsync} from "./account-login.js";
+import {validateWarpNameOrErrorAsync} from "../util/validators.js";
+import {JayneSingleton} from "../service/jayne.js";
+import {AdminKeyFile} from "../model/admin-key-file.js";
+import {deserializeWarpIndex} from "../util/deserializer.js";
 import path from "path";
-import {createClient} from "../util/client-generator";
-import {createLogContext} from "../util/log-context";
+import {createClient} from "../util/client-generator.js";
+import {createLogContext} from "../util/log-context.js";
 
 const RUNTIME_LIB_NAME = "stackless-js";
 

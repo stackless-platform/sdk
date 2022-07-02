@@ -1,18 +1,20 @@
-import {program} from "commander";
-import {logRemoteError, logOk, logLocalError, logSuccess} from "../util/logging";
+import { program } from "commander";
+import { logRemoteError, logOk, logLocalError, logSuccess } from "../util/logging.js";
 import {
     IdentityClassMapping,
     WarpClassMapping,
     WarpSrcClassTagMapping,
     WarpConfig,
     WarpIdentity
-} from "../model/warp-config";
+} from "../model/warp-config.js";
 import fs from "fs";
 import path from "path";
 import crc32 from "crc-32";
-import {JayneSingleton, WarpFileContent} from "../service/jayne";
-import {uuidv4} from "../util/util";
-import {createLogContext} from "../util/log-context";
+import { JayneSingleton, WarpFileContent } from "../service/jayne.js";
+import { uuidv4 } from "../util/util.js";
+import { createLogContext } from "../util/log-context.js";
+import { WARP_RUNTIME_PACKAGE_NAME } from "../constants.js";
+import { compile } from "../util/compiler.js";
 
 export function createBootProgramCommand(before: any) {
     program.command('boot [warpDir]')
@@ -39,7 +41,8 @@ function compare(l: WarpFileContent, r: WarpFileContent) {
     return comparison;
 }
 
-function getFiles(baseDir: string, dir: string, ext: string[]): WarpFileContent[] {
+
+function readWarpContent(baseDir: string, dir: string, ext?: string[]): WarpFileContent[] {
     let results: WarpFileContent[] = [];
     let list = fs.readdirSync(dir);
     const baseFileNames = new Set();
@@ -47,8 +50,8 @@ function getFiles(baseDir: string, dir: string, ext: string[]): WarpFileContent[
         const pathName = path.join(dir, fileName);
         let stat = fs.statSync(pathName);
         if (stat && stat.isDirectory()) {
-            if (fileName !== "warp-kernel")
-                results = results.concat(getFiles(baseDir, pathName, ext));
+            if (fileName !== WARP_RUNTIME_PACKAGE_NAME)
+                results = results.concat(readWarpContent(baseDir, pathName, ext));
         } else {
             let include = false;
             if (ext) {
@@ -60,12 +63,14 @@ function getFiles(baseDir: string, dir: string, ext: string[]): WarpFileContent[
             if (include) {
                 const name = path.relative(baseDir, pathName);
                 const baseFileName = path.join(path.parse(name).dir, path.parse(name).name);
-                if(baseFileNames.has(baseFileName))
-                    throw new Error(`Duplicate file name: ${pathName}. All warp code must have unique file base names (I.e. cannot have a file named foo.js and a file named foo.mjs in the save directory.)`);
+                if (baseFileNames.has(baseFileName)) {
+                    throw new Error(logLocalError(`Duplicate file name: ${pathName}. All warp code must have unique file base names (I.e. cannot have a file named foo.js and a file named foo.mjs in the save directory.)`));
+                }
                 baseFileNames.add(baseFileName);
-                const code = fs.readFileSync(pathName, {encoding: "utf8", flag: "r"});
-                if(!code || code.trim().length == 0)
-                    throw new Error(`Unable to push empty code file: ${pathName}`);
+                const code = fs.readFileSync(pathName, { encoding: "utf8", flag: "r" });
+                if (!code || code.trim().length == 0) {
+                    throw new Error(logLocalError(`Unable to push empty code file: ${pathName}`));
+                }
                 results.push({
                     name: name,
                     code: code
@@ -94,121 +99,133 @@ function getChecksum(warpName: string, warpDir: string, warpFiles: WarpFileConte
 
 
 export async function executeBootAsync(warpDir: string): Promise<boolean> {
+    
+    //this is stubbed
+    const output = await compile(warpDir);
+    return true;
+    
+    
+    
     //note: does not require login because the admin key is already in warp.json
 
-    if (!WarpConfig.fileExists(warpDir)) {
-        logLocalError(`${warpDir} is not a warp. You may need to run 'warp init' in that directory.`);
-        return false;
-    }
 
-    let warpConfig = await WarpConfig.tryOpen(warpDir);
-    if (!warpConfig) {
-        return false
-    }
 
-    let warpFiles;
-    try
-    {
-        warpFiles = getFiles(warpDir, warpDir,[".js", ".mjs"]);
-        if (!warpFiles || warpFiles.length == 0) {
-            logLocalError("No JavaScript files found in warp directory.");
-            return false;
-        }
-    }
-    catch(e) {
-        // @ts-ignore
-        logLocalError(e.message);
-        return false;
-    }
+    //if there's any typescript files, compile them to alternative directory and use that instead
+    // if (containsFilesWithExt(warpDir, warpDir, '.ts')) {
 
-    let checksum = getChecksum(warpConfig.warp, warpDir, warpFiles);
+    // }
 
-    const classMappings = [];
+    // TODO: 
+    // <compile>
+    // <upload>
+    // 5. pass the list of files to Jayne and get back a list of signed URLs to upload to
+    // 6. upload the files, warp_index, and a manifest that lists all the files and necessary warp metadata to the bucket
+    // 7. call boot warp with the manifest and warp_idex which updates the database and calls SetupWarp
+    // 8. write the new identity to the warp.json file returned by boot warp
 
-    if (warpConfig.classes.length > 0) {
-        for (const classTag of warpConfig.classes) {
-            let found = false;
-            // @ts-ignore
-            for (const identityClass of warpConfig.identity.identityClassMappings) {
-                if (identityClass.tag === classTag.tag) {
-                    classMappings.push(new WarpClassMapping(classTag.name, identityClass.classId));
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) {
-                logLocalError(`Invalid class mapping in warp.json. The class ${classTag.name} has a tag that wasn't found in identity's class mapping: ${JSON.stringify(warpConfig.identity.identityClassMappings)}.`)
-                return false;
-            }
-        }
-    }
+    // let warpFiles;
+    // try
+    // {
+    //     warpFiles = readWarpContent(warpDir, warpDir,[".js", ".mjs"]);
+    //     if (!warpFiles || warpFiles.length == 0) {
+    //         logLocalError("No JavaScript files found in warp directory.");
+    //         return false;
+    //     }
+    // }
+    // catch(e) {
+    //     // @ts-ignore
+    //     logLocalError(e.message);
+    //     return false;
+    // }
 
-    if (warpConfig.identity.checksum) {
-        if (warpConfig.identity.checksum === checksum) {
-            const prevClassNames = new Set<string>();
-            // @ts-ignore
-            for (const identityClassMapping of warpConfig.identity.identityClassMappings) {
-                prevClassNames.add(identityClassMapping.className);
-            }
+    // let checksum = getChecksum(warpConfig.warp, warpDir, warpFiles);
 
-            let hasDiff = classMappings.length !== warpConfig.identity.identityClassMappings?.length;
-            if (!hasDiff) {
-                for (const classMapping of classMappings) {
-                    if (!prevClassNames.has(classMapping.className)) {
-                        hasDiff = true;
-                        break;
-                    }
-                }
-            }
+    // const classMappings = [];
 
-            if (!hasDiff) {
-                logOk("No changes found");
-                return true;
-            }
-        }
-    }
+    // if (warpConfig.classes.length > 0) {
+    //     for (const classTag of warpConfig.classes) {
+    //         let found = false;
+    //         // @ts-ignore
+    //         for (const identityClass of warpConfig.identity.identityClassMappings) {
+    //             if (identityClass.tag === classTag.tag) {
+    //                 classMappings.push(new WarpClassMapping(classTag.name, identityClass.classId));
+    //                 found = true;
+    //                 break;
+    //             }
+    //         }
+    //         if (!found) {
+    //             logLocalError(`Invalid class mapping in warp.json. The class ${classTag.name} has a tag that wasn't found in identity's class mapping: ${JSON.stringify(warpConfig.identity.identityClassMappings)}.`)
+    //             return false;
+    //         }
+    //     }
+    // }
 
-    const adminKey = warpConfig.identity.adminKey;
-    const logContext = createLogContext();
+    // if (warpConfig.identity.checksum) {
+    //     if (warpConfig.identity.checksum === checksum) {
+    //         const prevClassNames = new Set<string>();
+    //         // @ts-ignore
+    //         for (const identityClassMapping of warpConfig.identity.identityClassMappings) {
+    //             prevClassNames.add(identityClassMapping.className);
+    //         }
 
-    try {
-        const response = await JayneSingleton.bootWarpAsync(logContext,
-            adminKey, warpConfig.warp, warpFiles, classMappings,
-            warpConfig.identity.warpId,
-            warpConfig.identity.warpVersion,
-            warpConfig.identity.lastClassId);
+    //         let hasDiff = classMappings.length !== warpConfig.identity.identityClassMappings?.length;
+    //         if (!hasDiff) {
+    //             for (const classMapping of classMappings) {
+    //                 if (!prevClassNames.has(classMapping.className)) {
+    //                     hasDiff = true;
+    //                     break;
+    //                 }
+    //             }
+    //         }
 
-        const classes = [];
-        const identityClasses = [];
-        let lastClassId = warpConfig.identity.lastClassId ?? 0;
-        for (const warpClassMapping of response.warpClassMappings) {
-            let tag = null;
-            if (warpConfig.identity.identityClassMappings) {
-                for (const prev of warpConfig.identity.identityClassMappings) {
-                    if (prev.classId === warpClassMapping.classId) {
-                        tag = prev.tag;
-                        break;
-                    }
-                }
-            }
-            if (!tag) {
-                tag = uuidv4(false);
-            }
-            classes.push(new WarpSrcClassTagMapping(warpClassMapping.className, tag));
-            identityClasses.push(new IdentityClassMapping(warpClassMapping.className, warpClassMapping.classId, tag));
-            if (warpClassMapping.classId > lastClassId)
-                lastClassId = warpClassMapping.classId;
-        }
+    //         if (!hasDiff) {
+    //             logOk("No changes found");
+    //             return true;
+    //         }
+    //     }
+    // }
 
-        warpConfig.classes = classes;
-        warpConfig.identity = new WarpIdentity(adminKey, checksum, response.warpIdStr, response.warpVersionStr, identityClasses, lastClassId);
-        warpConfig.writeToDir(warpDir);
+    // const adminKey = warpConfig.identity.adminKey;
+    // const logContext = createLogContext();
 
-        logSuccess("Warp booted successfully!");
-        return true;
-    } catch (e) {
-        // @ts-ignore
-        logRemoteError(logContext, e.message);
-        return false;
-    }
+    // try {
+    //     const response = await JayneSingleton.bootWarpAsync(logContext,
+    //         adminKey, warpConfig.warp, warpFiles, classMappings,
+    //         warpConfig.identity.warpId,
+    //         warpConfig.identity.warpVersion,
+    //         warpConfig.identity.lastClassId);
+
+    //     const classes = [];
+    //     const identityClasses = [];
+    //     let lastClassId = warpConfig.identity.lastClassId ?? 0;
+    //     for (const warpClassMapping of response.warpClassMappings) {
+    //         let tag = null;
+    //         if (warpConfig.identity.identityClassMappings) {
+    //             for (const prev of warpConfig.identity.identityClassMappings) {
+    //                 if (prev.classId === warpClassMapping.classId) {
+    //                     tag = prev.tag;
+    //                     break;
+    //                 }
+    //             }
+    //         }
+    //         if (!tag) {
+    //             tag = uuidv4(false);
+    //         }
+    //         classes.push(new WarpSrcClassTagMapping(warpClassMapping.className, tag));
+    //         identityClasses.push(new IdentityClassMapping(warpClassMapping.className, warpClassMapping.classId, tag));
+    //         if (warpClassMapping.classId > lastClassId)
+    //             lastClassId = warpClassMapping.classId;
+    //     }
+
+    //     warpConfig.classes = classes;
+    //     warpConfig.identity = new WarpIdentity(adminKey, checksum, response.warpIdStr, response.warpVersionStr, identityClasses, lastClassId);
+    //     warpConfig.writeToDir(warpDir);
+
+    //     logSuccess("Warp booted successfully!");
+    //     return true;
+    // } catch (e) {
+    //     // @ts-ignore
+    //     logRemoteError(logContext, e.message);
+    //     return false;
+    // }
 }

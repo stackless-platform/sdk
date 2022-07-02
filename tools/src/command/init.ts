@@ -1,13 +1,15 @@
 import path from "path";
-import {AdminKeyFile} from "../model/admin-key-file";
-import {logLocalError, logSuccess, logVerbose} from "../util/logging";
+import {AdminKeyFile} from "../model/admin-key-file.js";
+import {logLocalError, logSuccess, logVerbose} from "../util/logging.js";
 import fs from 'fs';
-import {validateWarpNameOrErrorAsync, warpNameValidatorAsync} from "../util/validators";
+import {validateWarpNameOrErrorAsync, warpNameValidatorAsync} from "../util/validators.js";
 import chalk from "chalk";
 import inquirer from "inquirer";
 import {Command, program} from "commander";
-import {WarpIdentity, WarpConfig} from "../model/warp-config";
-import {maybeExecuteLoginAsync} from "./account-login";
+import {WarpIdentity, WarpConfig} from "../model/warp-config.js";
+import {maybeExecuteLoginAsync} from "./account-login.js";
+import {WARP_RUNTIME_PACKAGE_NAME} from "../constants.js";
+import {getDirname} from "../util/dirname.js";
 
 async function promptWarpNameAsync(): Promise<string> {
     console.log("Give your new warp a name.");
@@ -23,8 +25,9 @@ async function promptWarpNameAsync(): Promise<string> {
 }
 
 function writeKernelIndexDTs(dir: string): string {
-    let indexDTsFile = path.resolve(__dirname, "..", "templates", "kernel-index.d.ts");
-    let kernelDir = path.resolve(dir, "warp-kernel");
+    const dirname = getDirname(import.meta.url);
+    let indexDTsFile = path.resolve(dirname, "..", "templates", "runtime-index.d.ts");
+    let kernelDir = path.resolve(dir, WARP_RUNTIME_PACKAGE_NAME);
     if (!fs.existsSync(kernelDir))
         fs.mkdirSync(kernelDir);
     let targetIndexDTsFile = path.resolve(kernelDir, "index.d.ts");
@@ -80,7 +83,7 @@ export async function executeInitAsync(dir: string, warpName: string | null, log
 
     //Write the warp source config file
     let warpSrcIdentity = new WarpIdentity(keyFile.adminKey);
-    let warpSrcConfig = new WarpConfig(warpName, [], warpSrcIdentity);
+    let warpSrcConfig = new WarpConfig(warpName, [], warpSrcIdentity, "init");
     let warpSrcConfigFile = warpSrcConfig.writeToDir(dir);
     logVerbose(`Wrote ${warpSrcConfigFile}`);
 

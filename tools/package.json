@@ -1,7 +1,8 @@
 {
-  "name": "",
+  "name": "stackless-tools",
   "private": "true",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "build-local-debug": "./build.sh local debug"
   },

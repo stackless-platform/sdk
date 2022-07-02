@@ -1,9 +1,9 @@
 import {Command, program} from "commander";
-import {AdminKeyFile} from "../model/admin-key-file";
-import {logRemoteError} from "../util/logging";
-import {maybeExecuteLoginAsync} from "./account-login";
-import {JayneSingleton} from "../service/jayne";
-import {createLogContext} from "../util/log-context";
+import {AdminKeyFile} from "../model/admin-key-file.js";
+import {logRemoteError} from "../util/logging.js";
+import {maybeExecuteLoginAsync} from "./account-login.js";
+import {JayneSingleton} from "../service/jayne.js";
+import {createLogContext} from "../util/log-context.js";
 
 export function createListProgramCommand(before: any) {
     program.command('list')

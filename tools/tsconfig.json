@@ -6,8 +6,9 @@
     "src/templates/**"
   ],
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "commonjs",
+    "target": "ES2022",
+    "module": "ES2022",
+    "moduleResolution": "Node",
     "allowJs": true,
     "declaration": true,
     "rootDir": "./src",

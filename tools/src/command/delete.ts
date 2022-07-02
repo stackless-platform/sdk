@@ -1,12 +1,9 @@
 import {program} from "commander";
-import {logRemoteError, logOk, logLocalError, logDetails, logNotice} from "../util/logging";
-import {JayneSingleton} from "../service/jayne";
-import {WARP_CONFIG_FILE_NAME, WarpConfig} from "../model/warp-config";
-import {createLogContext} from "../util/log-context";
-import fs from "fs";
-import path from "path";
-import {executeLoginAsync} from "./account-login";
-import {AdminKeyFile} from "../model/admin-key-file";
+import {logRemoteError, logOk} from "../util/logging.js";
+import {JayneSingleton} from "../service/jayne.js";
+import {createLogContext} from "../util/log-context.js";
+import {executeLoginAsync} from "./account-login.js";
+import {AdminKeyFile} from "../model/admin-key-file.js";
 
 export function createDeleteProgramCommand(before: any) {
     program.command('delete <warpName>')

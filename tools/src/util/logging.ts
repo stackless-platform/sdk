@@ -1,7 +1,7 @@
 import chalk from "chalk";
-import {GlobalOptions} from "./global-options";
+import {GlobalOptions} from "./global-options.js";
 
-function getColor(colorFunc:(...text: unknown[]) => string, str: string) {
+export function getColor(colorFunc:(...text: unknown[]) => string, str: string) {
     return GlobalOptions.color ? colorFunc(str) : str;
 }
 

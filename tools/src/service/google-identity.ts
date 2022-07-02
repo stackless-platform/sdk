@@ -1,9 +1,9 @@
 /// <reference lib="dom" />
 import { getApp, initializeApp, FirebaseApp } from 'firebase/app';
 import { getAuth, signOut, onAuthStateChanged, Auth, signInWithEmailAndPassword, UserCredential, sendEmailVerification } from 'firebase/auth';
-import { logLocalError, logVerbose } from "../util/logging";
-import { FIREBASE_CONFIG, SITE_VERIFY_EMAIL_URL } from "../config";
-import { requiresTruthy } from "../util/requires";
+import { logLocalError, logVerbose } from "../util/logging.js";
+import { FIREBASE_CONFIG, SITE_VERIFY_EMAIL_URL } from "../config.js";
+import { requiresTruthy } from "../util/requires.js";
 
 class GoogleIdentityLoginInfo {
     constructor(public credential: UserCredential, public idToken: string) {

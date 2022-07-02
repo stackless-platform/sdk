@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import {processCommandLineOptions} from "./util/command-line";
+import {processCommandLineOptions} from "./util/command-line.js";
 import chalk from "chalk";
 
 function main() {

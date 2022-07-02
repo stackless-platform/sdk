@@ -1,15 +1,15 @@
 import fs, {PathLike} from "fs";
-import {logRemoteError, logOk, logSuccess, logWarning, logVerbose, logLocalError} from "../util/logging";
-import {AdminKeyFile, getKeyFilePath, isLoggedIn, ADMIN_KEY_FILE_MODE} from "../model/admin-key-file";
-import {GoogleIdentitySingleton} from "../service/google-identity";
-import {JayneSingleton} from "../service/jayne";
+import {logRemoteError, logOk, logSuccess, logWarning, logVerbose, logLocalError} from "../util/logging.js";
+import {AdminKeyFile, getKeyFilePath, isLoggedIn, ADMIN_KEY_FILE_MODE} from "../model/admin-key-file.js";
+import {GoogleIdentitySingleton} from "../service/google-identity.js";
+import {JayneSingleton} from "../service/jayne.js";
 import inquirer from "inquirer";
-import {emailValidatorAsync, passwordValidatorAsync} from "../util/validators";
+import {emailValidatorAsync, passwordValidatorAsync} from "../util/validators.js";
 import chalk from "chalk";
-import {LoginInfo} from "../model/login-info";
+import {LoginInfo} from "../model/login-info.js";
 import {Command} from "commander";
-import {createLogContext} from "../util/log-context";
-import {sleepAsync} from "../util/sleep";
+import {createLogContext} from "../util/log-context.js";
+import {sleepAsync} from "../util/sleep.js";
 
 function loginWithKeyFile(keyFile: PathLike, overwrite: boolean): boolean {
     const keyFilePath = getKeyFilePath();

@@ -1,29 +1,28 @@
 import path from "path";
 import fs from "fs";
-import {logLocalError, logRemoteError, logVerbose} from "./logging";
+import {logLocalError, logRemoteError, logVerbose} from "./logging.js";
 import Mustache from "mustache";
-import {Unsigned, UnsignedZero} from "./unsigned";
-import {requiresTruthy} from "./requires";
-import {WarpIndexProto} from "../protocol/warp-index-proto";
-import {DataClassProto} from "../protocol/data-class-proto";
-import {MessageClassProto} from "../protocol/message-class-proto";
-import {ServiceClassProto} from "../protocol/service-class-proto";
-import {ServiceMethodProto} from "../protocol/service-method-proto";
-import {MethodArgumentProto} from "../protocol/method-argument-proto";
-import {FreeClassProto} from "../protocol/free-class-proto";
-import {FreeFunctionProto} from "../protocol/free-function-proto";
-import {BUILD_INFO} from "../config";
-import {ConstructorProto} from "../protocol/constructor-proto";
-import {MethodProto} from "../protocol/method-proto";
-import {MethodKindProto} from "../protocol/method-kind-proto";
-import exp from "constants";
-
-const {version} = require("../package.json");
-
-const EOL = require('os').EOL;
+import {Unsigned, UnsignedZero} from "./unsigned.js";
+import {requiresTruthy} from "./requires.js";
+import {WarpIndexProto} from "../protocol/warp-index-proto.js";
+import {DataClassProto} from "../protocol/data-class-proto.js";
+import {MessageClassProto} from "../protocol/message-class-proto.js";
+import {ServiceClassProto} from "../protocol/service-class-proto.js";
+import {ServiceMethodProto} from "../protocol/service-method-proto.js";
+import {MethodArgumentProto} from "../protocol/method-argument-proto.js";
+import {FreeClassProto} from "../protocol/free-class-proto.js";
+import {FreeFunctionProto} from "../protocol/free-function-proto.js";
+import {BUILD_INFO} from "../config.js";
+import {ConstructorProto} from "../protocol/constructor-proto.js";
+import {MethodProto} from "../protocol/method-proto.js";
+import {MethodKindProto} from "../protocol/method-kind-proto.js";
+import {EOL} from "os";
+import {getPackageJsonVersion} from "./package-json.js";
+import {getDirname} from "./dirname.js";
 
 function readTemplate(templateFileName: string): string {
-    let templateFile = path.resolve(__dirname, "..", "templates", templateFileName);
+    const dirname = getDirname(import.meta.url);
+    let templateFile = path.resolve(dirname, "..", "templates", templateFileName);
     return fs.readFileSync(templateFile, {flag: "r", encoding: "utf-8"});
 }
 
@@ -456,7 +455,7 @@ function generateClient(logContext: string, isEsm: boolean, userKey: string, war
 
     const index_js = Mustache.render(indexTemplate, {
         "BUILD_INFO": BUILD_INFO,
-        STACKLESS_TOOLS_VERSION: version,
+        STACKLESS_TOOLS_VERSION: getPackageJsonVersion(),
         IMPORT: isEsm ? readTemplate("index-import-esm.js") : readTemplate("index-import-cjs.js"),
         CJS_EXPORT: cjsExports,
         REGEN_COMMAND: regenCommand,

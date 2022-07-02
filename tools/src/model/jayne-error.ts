@@ -1,5 +1,5 @@
-import {requiresTruthy} from "../util/requires";
-import {SERVICE_NOTICES_CHANNEL} from "../config"
+import {requiresTruthy} from "../util/requires.js";
+import {SERVICE_NOTICES_CHANNEL} from "../config.js"
 
 export const STACKLESS_EMAIL_NOT_VERIFIED_ERROR_CODE = 404;
 export const STACKLESS_SERVER_ERROR_CODE = 400;

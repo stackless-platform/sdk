@@ -1,9 +1,9 @@
-import {GoogleIdentity, GoogleIdentitySingleton} from "./google-identity";
-import {requiresTruthy} from "../util/requires";
-import {STACKLESS_SERVER_ERROR_CODE, parseError, STACKLESS_EMAIL_NOT_VERIFIED_ERROR_CODE} from "../model/jayne-error";
+import {GoogleIdentity, GoogleIdentitySingleton} from "./google-identity.js";
+import {requiresTruthy} from "../util/requires.js";
+import {STACKLESS_SERVER_ERROR_CODE, parseError, STACKLESS_EMAIL_NOT_VERIFIED_ERROR_CODE} from "../model/jayne-error.js";
 import fetch from 'cross-fetch';
-import {WarpClassMapping} from "../model/warp-config";
-import {JAYNE_SERVICE_URL, JAYNE_TOOLS_PROTOCOL_VERSION} from "../config";
+import {WarpClassMapping} from "../model/warp-config.js";
+import {JAYNE_SERVICE_URL, JAYNE_TOOLS_PROTOCOL_VERSION} from "../config.js";
 
 //-- REQUEST
 

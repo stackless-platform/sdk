@@ -1,5 +1,5 @@
-import {requiresTruthy} from "./requires";
-import {WarpIndexProto} from "../protocol/warp-index-proto";
+import {requiresTruthy} from "./requires.js";
+import {WarpIndexProto} from "../protocol/warp-index-proto.js";
 import {ByteBuffer} from "flatbuffers";
 
 export function deserializeWarpIndex(warpIndexStr: string): WarpIndexProto {
