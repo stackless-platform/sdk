@@ -24,7 +24,7 @@ async function promptWarpNameAsync(): Promise<string> {
 
 function writeKernelIndexDTs(dir: string): string {
     let indexDTsFile = path.resolve(__dirname, "..", "templates", "kernel-index.d.ts");
-    let kernelDir = path.resolve(dir, "warp-kernel");
+    let kernelDir = path.resolve(dir, "warp-runtime");
     if (!fs.existsSync(kernelDir))
         fs.mkdirSync(kernelDir);
     let targetIndexDTsFile = path.resolve(kernelDir, "index.d.ts");

@@ -15,7 +15,7 @@ import {DataUpdateMessageProto} from "../internal/protocol/data-update-message-p
 import {Tracker} from "../internal/util/tracker.js";
 import {getRiverClientAsync} from "../internal/service/river-client-factory.js";
 import {handleDataUpdateMessage} from "../internal/util/update-handler.js";
-import {runtime} from "../internal/runtime.js";
+import {client} from "../internal/client.js";
 import {
     Data,
     Service,
@@ -58,7 +58,7 @@ class Warp {
         const logContext = createLogContext();
 
         const tracker = new Tracker();
-        const object = await runtime.getDataAsync(logContext, objectKey, tracker);
+        const object = await client.getDataAsync(logContext, objectKey, tracker);
         await tracker.applyOnceAsync(logContext);
 
         return <T><unknown>object;

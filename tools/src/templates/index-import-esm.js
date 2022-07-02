@@ -1,2 +1,2 @@
-import {createUuid, Data, Service, Message} from "stackless-js";
-import {runtime} from "stackless-js/internal";
+import {createUuid, Data, Service, Message} from "warp-client";
+import {client} from "warp-client/internal";

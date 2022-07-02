@@ -3,7 +3,7 @@ import {MessageRegistry, DataRegistry} from "./registry.js";
 import {logVerbose} from "./logging.js";
 import {Message, Data, DataUpdatedEvent} from "../../public/model-types.js";
 import {MessageInstanceKey, DataKey} from "../internal-model-types.js";
-import {runtime} from "../runtime.js";
+import {client} from "../client.js";
 
 class DataUpdatedFiringQueue {
     private _queue: { object: Data, deleted: boolean } [];
@@ -132,7 +132,7 @@ class DataResolutionQueue {
                 if (item instanceof SingleResolutionItem) {
                     let value = DataRegistry.instance.tryGetInstance(item.objectKey);
                     if (!value) {
-                        value = await runtime.getDataAsync(logContext, item.objectKey, this._tracker);
+                        value = await client.getDataAsync(logContext, item.objectKey, this._tracker);
                     }
                     if (item.maybeResolved)
                         item.maybeResolved(value);
@@ -141,7 +141,7 @@ class DataResolutionQueue {
                     for (let objectKey of item.objectKeys) {
                         let value = DataRegistry.instance.tryGetInstance(objectKey);
                         if (!value) {
-                            value = await runtime.getDataAsync(logContext, objectKey, this._tracker);
+                            value = await client.getDataAsync(logContext, objectKey, this._tracker);
                         }
                         keysAndValues.set(objectKey, value);
                     }

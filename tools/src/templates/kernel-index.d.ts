@@ -18,13 +18,13 @@ export class Service {
 
 /**
  * Base class for your Data.
- * - Synonimous with a database table in traditional systems.
+ * - Synonymous with a database table in traditional systems.
  * - Has a string named primaryKey that uniquely identifies the object. Use this key (and the Data extended type name) when calling system.getData.
  * - You can create any number of properties containing most kinds of JavaScript data (numbers, string, Maps, Sets, etc..)
  * - You can pass Data instances to Service methods and return them.
  * - When inside a Service transaction (a service method call), you may make any number of changes to the properties.
  * - All Data changes must be either saved or reverted before the Service transaction completes, otherwise the transaction is rolled back.
- * - Clients can recieve server-sent realtime push updates to the Data instances they care about using a combination of warp.subscribeUpdatesAsync followed by warp.addUpdateListener.
+ * - Clients can receive server-sent realtime push updates to the Data instances they care about using a combination of warp.subscribeUpdatesAsync followed by warp.addUpdateListener.
  * @see system.getData
  * @see system.saveDataGraphs
  * @see system.saveData
@@ -55,7 +55,7 @@ export class Message {
 
 /**
  * Generates a universally-unique identifier.
- * @param {boolean} dashes - (default: false) Whether or not to break up the UUID string with dashes to make to more readable to humans.
+ * @param {boolean} dashes - (default: false) Whether to break up the UUID string with dashes to make to more readable to humans.
  * @returns {string} The UUID with or without dashes.
  * */
 export function createUuid(dashes: boolean | undefined) : string;
@@ -66,7 +66,7 @@ export function createUuid(dashes: boolean | undefined) : string;
 export class system {
     /**
      * Saves one or more Data to the database.
-     * - All changes made to Data must be saved or reverted by the end of the transaction. Otherwise the service call will fail with a Engine_UnsavedChanges error.
+     * - All changes made to Data must be saved or reverted by the end of the transaction. Otherwise, the service call will fail with a Engine_UnsavedChanges error.
      * @see Data
      * @param {Data[]} data - One or more Data to save.
      * @returns {boolean} True if there were any changes to save, False otherwise.
@@ -109,7 +109,7 @@ export class system {
     static getData<T extends Data>(dataType : new() => T, primaryKey: string) : T;
 
     /**
-     * Permanently deletes a Data or Service instance from the database. Once it has been deleted it cannot be retreived.
+     * Permanently deletes a Data or Service instance from the database. Once it has been deleted it cannot be retrieved.
      * @param {T} serviceOrObject - The Service or Data to permanently delete.
      * @param {boolean} purge - (Optional, default = false) Normal deletion leaves behind a very small marker that prevents deleted services and objects from being re-created accidentally. Passing true to this argument prevents this marker from being written.
      * For service deletions specifically, careful consideration should be made when setting this to true because it could result in accidental re-creation because services are created-on-first-use.
@@ -118,7 +118,7 @@ export class system {
 
     /**
      * Fires a Message instance to all clients that are subscribed.
-     * - Any Data or Services referred to by properties on the Message that have had changes during the current service method call must be manually saved before calling sendMessage. Otherwise an exception is thrown. This ensures a consistent state for client-side message subscribers.
+     * - Any Data or Services referred to by properties on the Message that have had changes during the current service method call must be manually saved before calling sendMessage. Otherwise, an exception is thrown. This ensures a consistent state for client-side message subscribers.
      * - Messages will not be fired when a service call returns an error or an exception is unhandled by your code.
      * @see saveDataGraphs
      * @param {TS} source - A reference to a Service or Data which will be used as the source of this message.

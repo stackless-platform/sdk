@@ -1,2 +1,2 @@
-const {createUuid, Data, Service, Message} = require("stackless-js");
-const {runtime} = require("stackless-js/internal");
+const {createUuid, Data, Service, Message} = require("warp-client");
+const {client} = require("warp-client/internal");

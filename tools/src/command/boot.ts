@@ -47,7 +47,7 @@ function getFiles(baseDir: string, dir: string, ext: string[]): WarpFileContent[
         const pathName = path.join(dir, fileName);
         let stat = fs.statSync(pathName);
         if (stat && stat.isDirectory()) {
-            if (fileName !== "warp-kernel")
+            if (fileName !== "warp-runtime")
                 results = results.concat(getFiles(baseDir, pathName, ext));
         } else {
             let include = false;

@@ -11,7 +11,7 @@ import path from "path";
 import {createClient} from "../util/client-generator";
 import {createLogContext} from "../util/log-context";
 
-const RUNTIME_LIB_NAME = "stackless-js";
+const CLIENT_LIB_NAME = "warp-client";
 
 function getBuildKeyAndRegenerateCommand(warpName: string): [string, string] {
     let buildKey = `connect-${warpName.toLowerCase()}`;
@@ -53,7 +53,7 @@ function updatePackageJson(packageJsonFile: string, warpName: string, updateBuil
         packageJsonObj.dependencies = {};
     }
 
-    packageJsonObj.dependencies[RUNTIME_LIB_NAME] = "latest";
+    packageJsonObj.dependencies[CLIENT_LIB_NAME] = "latest";
     packageJsonObj.dependencies[warpPackageName] = `file:./${relRootPath}`
 
     const indent = indentionRule.spaces ? indentionRule.count : "\t";
@@ -180,11 +180,11 @@ export async function executeConnectAsync(warpName: string, projectDir: string, 
 
         const importStatements = `${chalk.magentaBright("Import instructions:")}
 ${chalk.blueBright(" If you prefer ES6 import statements:")}
-   import { warp } from "${RUNTIME_LIB_NAME}";
+   import { warp } from "${CLIENT_LIB_NAME}";
    import { ${chalk.yellow("/* your warp types here... */")} } from "${chalk.greenBright(packageName)}";
 
 ${chalk.blueBright(" Or if you prefer using require:")}
-   const { warp } = require("${RUNTIME_LIB_NAME}");
+   const { warp } = require("${CLIENT_LIB_NAME}");
    const { ${chalk.yellow("/* your warp types here... */")} } = require("${chalk.greenBright(packageName)}");`;
 
         console.log(importStatements);

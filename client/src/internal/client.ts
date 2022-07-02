@@ -29,7 +29,7 @@ import {
 import {Message, Data, Service, ServiceConstructor} from "../public/model-types.js";
 import {ValueUnionProto} from "./protocol/value-union-proto.js";
 
-class Runtime {
+class Client {
     registerWarp(name: string, userKey: string, warpidString: string, warpVersionString: string): WarpKey {
         //registers a warp with the WarpRegistry
         const warpKey = new WarpKey(new Unsigned(warpidString), new Unsigned(warpVersionString));
@@ -172,4 +172,4 @@ class Runtime {
     }
 }
 
-export const runtime = new Runtime();
+export const client = new Client();
