@@ -1,6 +1,6 @@
 /**
  * Base class for your Services.
- * - Synonimous with a microservice in tranditional systems.
+ * - Synonymous with a microservice in traditional systems.
  * - Used for executing business logic inside the Warp with direct, in-memory access to the datastore.
  * - You can create any number of properties on Services containing most kinds of JavaScript data (numbers, strings, Maps, Sets, etc..)
  * - Clients call methods defined on Services using code-generated classes.

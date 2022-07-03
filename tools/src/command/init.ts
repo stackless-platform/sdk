@@ -22,8 +22,8 @@ async function promptWarpNameAsync(): Promise<string> {
     return answer.warpName;
 }
 
-function writeKernelIndexDTs(dir: string): string {
-    let indexDTsFile = path.resolve(__dirname, "..", "templates", "kernel-index.d.ts");
+function writeRuntimeIndexDTs(dir: string): string {
+    let indexDTsFile = path.resolve(__dirname, "..", "templates", "runtime-index.d.ts");
     let kernelDir = path.resolve(dir, "warp-runtime");
     if (!fs.existsSync(kernelDir))
         fs.mkdirSync(kernelDir);
@@ -84,7 +84,7 @@ export async function executeInitAsync(dir: string, warpName: string | null, log
     let warpSrcConfigFile = warpSrcConfig.writeToDir(dir);
     logVerbose(`Wrote ${warpSrcConfigFile}`);
 
-    const indexDTsFile = writeKernelIndexDTs(dir);
+    const indexDTsFile = writeRuntimeIndexDTs(dir);
     logVerbose(`Wrote ${indexDTsFile}`);
 
     logSuccess("Warp created successfully!");
